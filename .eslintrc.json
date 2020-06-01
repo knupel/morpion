@@ -6,7 +6,7 @@
     "plugin:react/recommended"
   ],
   "plugins": ["prettier"],
-  "rules": { "prettier/prettier": "error" },
+  // "rules": { "prettier/prettier": "error" },
   "parser": "babel-eslint",
   "env": { "browser": true },
   "settings": { "react": { "pragma": "React", "version": "detect" } }

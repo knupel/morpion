@@ -3,14 +3,52 @@ import ReactDOM from 'react-dom';
 import './morpion.css';
 import { queryAllByAttribute } from '@testing-library/react';
 
-// step 6 > have changed class square to function Square
-// by this way wen can remove this at front of props, plus we simplify the code writing
-function Square(props) {
-	return (
-		<button className="square" onClick={props.onClick}>
-			{props.value}
-		</button>
+
+class Square extends React.Component {
+	// step 4
+	constructor(props) {
+		super(props);
+		this.state = {
+			value: null,
+		};
+	}
+	render() {
+		return (
+			/* // step 1
+			<button className="square">
+					{
+						this.props.value 
+
+					}
+			</button>
+			*/
+      /* // step 2
+			<button className="square" onClick={function() { alert('clic'); }}>
+				{this.props.value}
+			</button>
+			*/
+			/* // step 3 use arrow syntax instead old one, it's more simple and understandable
+			<button className="square" onClick={() => alert('clic clac cloc')}>
+				{this.props.value}
+			</button>
+			*/
+			/*// step 4
+			< button 
+				className = "square" 
+				onClick = {() => this.setState({value: 'X'})} 
+			> 
+				{ this.state.value } 
+				</button>
+			*/
+			// step 5 
+			< button
+				className="square"
+				onClick = {() => this.props.onClick()}
+			>
+			 {this.props.value}
+			 </button>
 		);
+	}
 }
 
 class Board extends React.Component {
@@ -19,17 +57,15 @@ class Board extends React.Component {
 		super(props);
 		this.state = {
 			list_square: Array(9).fill(null),
-			which_one: true,
 		};
 	}
-	
-	// step 6
+
+	// step 5
 	handle_click(i) {
 		const temp_list = this.state.list_square.slice();
-		temp_list[i] = this.state.which_one ? 'X' : 'O';
+		temp_list[i] = 'X';
 		this.setState({
-			list_square: temp_list,
-			which_one : !this.state.which_one,
+			list_square: temp_list
 		});
 	}
 
@@ -50,8 +86,7 @@ class Board extends React.Component {
   }
 
 	render() {
-		// step 6 > change the status to know who play
-		const status = 'Next player: ' + (this.state.which_one ?  'X' : 'O') ;
+		const status = 'Next player: X';
 
 		return (
 			<div>
