@@ -63,14 +63,14 @@ class Game extends React.Component {
 	handle_click(i) {
 		const history = this.state.history.slice(0, this.state.step_num + 1);
 		const current = history[history.length - 1];
-		const list_square = current.list_square.slice();
-		if (winner_is(list_square) || list_square[i]) {
+		const temp_list = current.list_square.slice();
+		if (winner_is(temp_list) || temp_list[i]) {
 			return;
 		}
-		list_square[i] = this.state.which_one ? 'X' : 'O';
+		temp_list[i] = this.state.which_one ? 'X' : 'O';
 		this.setState({
 			history: history.concat([{
-				list_square: list_square,
+				list_square: temp_list,
 			}]),
 			step_num: history.length,
 			which_one: !this.state.which_one,
