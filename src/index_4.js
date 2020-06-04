@@ -60,11 +60,11 @@ class Game extends React.Component {
 		}
 	}
 
-	handle_click(i) {
+	handleClick(i) {
 		const history = this.state.history.slice(0, this.state.step_num + 1);
 		const current = history[history.length - 1];
 		const list_square = current.list_square.slice();
-		if (winner_is(list_square) || list_square[i]) {
+		if (calculateWinner(list_square) || list_square[i]) {
 			return;
 		}
 		list_square[i] = this.state.which_one ? 'X' : 'O';
@@ -77,7 +77,7 @@ class Game extends React.Component {
 		});
 	}
 
-	jump_to(step) {
+	jumpTo(step) {
 		this.setState({
 			step_num: step,
 			which_one: (step % 2) === 0,
@@ -87,14 +87,14 @@ class Game extends React.Component {
 	render() {
 		const history = this.state.history;
 		const current = history[this.state.step_num];
-		const winner = winner_is(current.list_square);
+		const winner = calculateWinner(current.list_square);
 
 		const list_move = history.map((step, move) => {
 			const desc = move ?
 				'Revenir au tour ' + move :
 				'Nouvelle partie';
 			return ( <li key = {move} >
-				<button onClick = {() => this.jump_to(move)} > 
+				<button onClick = {() => this.jumpTo(move)} > 
 				{desc} 
 				</button> 
 				</li>
@@ -112,7 +112,7 @@ class Game extends React.Component {
 				<div className = "game-board" >
 					<Board 
 						list_square = {current.list_square} 
-						onClick = {(i) => this.handle_click(i)}
+						onClick = {(i) => this.handleClick(i)}
 					/> 
 				</div> 
 				<div className = "game-info" >
@@ -124,7 +124,7 @@ class Game extends React.Component {
 	}
 }
 
-function winner_is(squares) {
+function calculateWinner(squares) {
 	const lines = [
 		[0, 1, 2],
 		[3, 4, 5],
